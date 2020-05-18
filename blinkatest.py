@@ -10,7 +10,7 @@ import busio
 from board import SCL, SDA
 from adafruit_trellis import Trellis
 from pygame.locals import *   # for event MOUSE variables
-
+import setting
 
 # Create the I2C interface
 i2c = busio.I2C(SCL, SDA)
@@ -23,27 +23,28 @@ trellis = Trellis(i2c)  # 0x70 when no I2C address is supplied
 # set 'auto_show' to 'False', you will have to call the 'show()'
 # method afterwards to send updates to the Trellis board.
 
-# Turn on every LED
-print("Turning all LEDs on...")
-trellis.led.fill(True)
-time.sleep(2)
-
-# Turn off every LED
-print("Turning all LEDs off...")
-trellis.led.fill(False)
-time.sleep(2)
+# # Turn on every LED
+# print("Turning all LEDs on...")
+# trellis.led.fill(True)
+# time.sleep(2)
 
 # Turn on every LED, one at a time
 print("Turning on each LED, one at a time...")
 for i in range(16):
     trellis.led[i] = True
     time.sleep(0.1)
+time.sleep(1)
 
-# Turn off every LED, one at a time
-print("Turning off each LED, one at a time...")
-for i in range(15, 0, -1):
-    trellis.led[i] = False
-    time.sleep(0.1)
+# Turn off every LED
+print("Turning all LEDs off...")
+trellis.led.fill(False)
+time.sleep(2)
+
+# # Turn off every LED, one at a time
+# print("Turning off each LED, one at a time...")
+# for i in range(15, 0, -1):
+#     trellis.led[i] = False
+#     time.sleep(0.1)
 
 # Now start reading button activity
 # - When a button is depressed (just_pressed),
@@ -61,7 +62,11 @@ pygame.mixer.init()
 
 wavefiles = ['01.wav','02.wav','03.wav','04.wav','05.wav','06.wav','07.wav','08.wav',
   '09.wav','10.wav','11.wav','12.wav','13.wav','14.wav','15.wav','16.wav']
-path = '/home/pi/Final/drums2/'
+
+
+inst = setting.index   # instrument index
+paths = ['/piano/','/violin/','/piano/','/flute/','/drum/']
+
 while True:
     # Make sure to take a break during each trellis.read_buttons
     # cycle.
@@ -69,9 +74,10 @@ while True:
     
     just_pressed, released = trellis.read_buttons()
     for b in just_pressed:
-        name = path+wavefiles[b]
-        pygame.mixer.music.load(name)
-        pygame.mixer.music.play(0)
+        name = '/home/pi/Final' + paths[3] + wavefiles[b]
+        pygame.mixer.Channel(0).play(pygame.mixer.Sound(name))
+        #pygame.mixer.music.load(name)
+        #pygame.mixer.music.play(0)
         print("pressed:", b)
         trellis.led[b] = True
     pressed_buttons.update(just_pressed)
