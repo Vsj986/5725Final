@@ -5,6 +5,7 @@ import time
 import pygame
 from pygame.locals import *   # for event MOUSE variables
 import os
+import setting   # import global variables
 
 os.putenv('SDL_VIDEODRIVER', 'fbcon')   # Display on piTFT
 os.putenv('SDL_FBDEV', '/dev/fb1')     
@@ -37,9 +38,9 @@ GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #list of instrument values communicated via fifo
 #change values to match frequency value to be communicated
 
-instrument_buttons = ['piano', 'cello', 'guitar', 'flute', 'zheng', 'bass']
+instrument_buttons = ['piano', 'cello', 'guitar', 'flute', 'drum']
 
-instrument_index = 0; #piano default
+instrument_index = setting.index     #piano default
 
 my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit'}
 
@@ -112,22 +113,22 @@ while True:
             if y > 190 and y < 210 and x > 250 and x < 290: #if quit button           
                 exit(0)
             elif y > 40 and y < 70 and x > 60 and x < 100: #if up arrow
-                if(instrument_index == 5): #out of bounds
+                if(instrument_index == 4): #out of bounds
                     instrument_index = 0
                 else:
                     instrument_index = instrument_index + 1
 
-		print('up arrow')
+                print('up arrow')
                 print(instrument_index)
                 print(instrument_buttons[instrument_index])
             elif y > 170 and y < 200 and x > 60 and x < 100: #if down arrow
                 if(instrument_index == 0): #out of bounds
-                    instrument_index = 5
+                    instrument_index = 4
                 else:
                     instrument_index = instrument_index - 1
-		print('down arrow')
-		print(instrument_index)
-		print(instrument_buttons[instrument_index])
+                print('down arrow')
+                print(instrument_index)
+                print(instrument_buttons[instrument_index])
         
     screen.fill(CYAN)
     pygame.draw.polygon(screen, WHITE, ((80,50),(70,60),(90,60))) #up arrow
