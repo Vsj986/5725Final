@@ -5,7 +5,7 @@ import time
 import pygame
 from pygame.locals import *   # for event MOUSE variables
 import os
-import setting   # import global variables
+#import setting   # import global variables
 
 os.putenv('SDL_VIDEODRIVER', 'fbcon')   # Display on piTFT
 os.putenv('SDL_FBDEV', '/dev/fb1')     
@@ -25,24 +25,25 @@ my_font= pygame.font.Font(None, 30)
 other_font= pygame.font.Font(None, 20)
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(6, GPIO.OUT) #connected to servos
-GPIO.setup(5, GPIO.OUT)
 
-GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 #list of instrument values communicated via fifo
 #change values to match frequency value to be communicated
 
 instrument_buttons = ['piano', 'cello', 'guitar', 'flute', 'drum']
 
-instrument_index = setting.index     #piano default
+instrument_index = 0    #piano default
 
-my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit'}
+button_states = ['stopped', 'recording', 'playback']
+
+state1 = 0
+state2 = 0
+
+my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit', 
+                (200,100): button_states[state1], (200,120): button_states[state2]}
 
 screen.fill(CYAN)               # Erase the Work space     
 for text_pos, my_text in my_buttons.items():    
@@ -62,31 +63,20 @@ stopped = False
 loopcount = 0 #counts amount of loops
 timecount = 0 #timer variable
 
-def GPIO22_callback(channel):
-    print(22)
     
 def GPIO27_callback(channel):
     exit(0)
     print(27)
     
-def GPIO17_callback(channel):
-    print(17)
+#def GPIO19_callback(channel):
+    #print(19)
     
-def GPIO23_callback(channel):
-    print(23)
+#def GPIO26_callback(channel):
+    #print(26)
     
-def GPIO19_callback(channel):
-    print(19)
-    
-def GPIO26_callback(channel):
-    print(26)
-    
-GPIO.add_event_detect(22,GPIO.FALLING, callback=GPIO22_callback)
 GPIO.add_event_detect(27,GPIO.FALLING, callback=GPIO27_callback)
-GPIO.add_event_detect(17,GPIO.FALLING, callback=GPIO17_callback)
-GPIO.add_event_detect(23,GPIO.FALLING, callback=GPIO23_callback)
-GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
-GPIO.add_event_detect(26,GPIO.FALLING, callback=GPIO26_callback)
+#GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
+#GPIO.add_event_detect(26,GPIO.FALLING, callback=GPIO26_callback)
 
 #main loop
 while True:
@@ -134,7 +124,8 @@ while True:
     pygame.draw.polygon(screen, WHITE, ((80,50),(70,60),(90,60))) #up arrow
     pygame.draw.polygon(screen, WHITE, ((80,190),(70,180),(90,180))) #down arrow
                 
-    my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit'}
+    my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit',
+                    (200,100): button_states[state1], (200,120): button_states[state2]}
 
     for text_pos, my_text in my_buttons.items():    
         text_surface = other_font.render(my_text, True, WHITE)    

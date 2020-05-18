@@ -7,6 +7,7 @@ from pygame.locals import *   # for event MOUSE variables
 import RPi.GPIO as GPIO
 import pyaudio
 import wave
+import setting   # import global variables
 
 
 # Create the I2C interface
@@ -35,12 +36,10 @@ GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
-state19 = 0
-state26 = 0
-state6 = 0
+state19 = setting.state1
+state26 = setting.state2
 
 def GPIO19_callback(channel):
     print("19")
@@ -80,31 +79,10 @@ def GPIO26_callback(channel):
     elif state26 == 2; #playback
         print('playback26')
         playback('26', 2)
-
-
-def GPIO6_callback(channel):
-    print("6")
-
-    state6 = state6 + 1 #increase state each time it is pressed
-    if state6 > 2:
-        state6 = 0#reset back to state 0
-
-
-    if state6 == 0: #empty state
-        #stop sounds if playing
-        print('state0-6')
-        pygame.mixer.Channel(3).stop()
-    elif state6 == 1: #record
-        print('record6')
-        record('6')
-    elif state6 == 2; #playback
-        print('playback6')
-        playback('6', 3)
     
 
 GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
 GPIO.add_event_detect(26,GPIO.FALLING, callback=GPIO26_callback)
-GPIO.add_event_detect(6,GPIO.FALLING, callback=GPIO19_callback)
 
 def record(buttonNum):
     form_1 = pyaudio.paInt16 # 16-bit resolution
