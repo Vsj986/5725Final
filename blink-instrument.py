@@ -98,6 +98,7 @@ def GPIO19_callback(channel):
         cmdp1 = 'aplay /home/pi/Final/loop1.wav &'
         os.system(cmdp1)
         print("playing1...")
+        time.sleep(5000)
 
 
 def GPIO26_callback(channel):
@@ -118,6 +119,7 @@ def GPIO26_callback(channel):
         cmdp2 = 'aplay /home/pi/Final/loop2.wav &'
         os.system(cmdp2)
         print("playing2...")
+        time.sleep(5000)
 
 
     
