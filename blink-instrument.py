@@ -87,6 +87,19 @@ def GPIO19_callback(channel):
     if state1 > 2:
         state1 = 0 #reset back to state 0
 
+    #different modes
+    if(state1 == 0):
+        print("stopped1")
+    elif(state1 == 1):
+        cmd1 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
+        os.system(cmd1)
+        print("recording1...")
+    elif(state1 == 2):
+        cmdp1 = 'aplay /home/pi/Final/loop1.wav &'
+        os.system(cmdp1)
+        print("playing1...")
+
+
 def GPIO26_callback(channel):
     print(26)
     global state2
