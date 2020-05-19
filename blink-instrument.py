@@ -94,7 +94,7 @@ def GPIO19_callback(channel):
         cmd1 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
         os.system(cmd1)
         print("recording1...")
-    while(state1 == 2):
+    while(state1 == 2 and not GPIO.input(19)):
         cmdp1 = 'aplay /home/pi/Final/loop1.wav &'
         os.system(cmdp1)
         print("playing1...")
@@ -115,11 +115,11 @@ def GPIO26_callback(channel):
         cmd2 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop2.wav -c2 -r48000 &'
         os.system(cmd2)
         print("recording2...")
-    while(state2 == 2):
+    while(state2 == 2 and not GPIO.input(26)):
         cmdp2 = 'aplay /home/pi/Final/loop2.wav &'
         os.system(cmdp2)
         print("playing2...")
-        time.sleep(5)
+        time.sleep(5) 
 
 
     
