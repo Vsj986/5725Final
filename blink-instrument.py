@@ -91,8 +91,8 @@ def GPIO26_callback(channel):
         state2 = 0 #reset back to state 0
     
 GPIO.add_event_detect(27,GPIO.FALLING, callback=GPIO27_callback)
-GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO27_callback)
-GPIO.add_event_detect(26,GPIO.FALLING, callback=GPIO27_callback)
+GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
+GPIO.add_event_detect(26,GPIO.FALLING, callback=GPIO26_callback)
 
 
 #blinkatest stuff
