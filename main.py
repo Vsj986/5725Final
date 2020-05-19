@@ -8,7 +8,7 @@ import os
 import busio
 from board import SCL, SDA
 from adafruit_trellis import Trellis
-import pyaudio #these are for audio recording
+#import pyaudio #these are for audio recording
 import wave
 #import setting   # import global variables
 
