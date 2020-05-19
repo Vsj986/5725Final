@@ -8,7 +8,7 @@ import os
 import busio
 from board import SCL, SDA
 from adafruit_trellis import Trellis
-import pyaudio #these are for audio recording
+#import pyaudio #these are for audio recording
 import wave
 #import setting   # import global variables
 
@@ -40,12 +40,14 @@ GPIO.setmode(GPIO.BCM)
 #list of instrument values communicated via fifo
 #change values to match frequency value to be communicated
 
-instrument_buttons = ['piano', 'cello', 'guitar', 'flute', 'drum']
+instrument_buttons = ['piano', 'violin', 'flute', 'drum']
 
 instrument_index = 0    #piano default
 
 button_states = ['stopped', 'recording', 'playback']
 
+global state1
+global state2
 state1 = 0
 state2 = 0
 
@@ -80,15 +82,18 @@ def GPIO27_callback(channel):
 
 def GPIO19_callback(channel):
     print(19)
+    global state1
     state1 = state1 + 1 #increase state each time it is pressed
     if state1 > 2:
         state1 = 0 #reset back to state 0
 
 def GPIO26_callback(channel):
     print(26)
+    global state2
     state2 = state2 + 1 #increase state each time it is pressed
     if state2 > 2:
         state2 = 0 #reset back to state 0
+    print(state2)
     
 GPIO.add_event_detect(27,GPIO.FALLING, callback=GPIO27_callback)
 GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
@@ -117,7 +122,8 @@ pygame.mixer.init()
 wavefiles = ['01.wav','02.wav','03.wav','04.wav','05.wav','06.wav','07.wav','08.wav',
   '09.wav','10.wav','11.wav','12.wav','13.wav','14.wav','15.wav','16.wav']
 
-paths = ['/piano/','/violin/','/piano/','/flute/','/drum/']
+
+paths = ['/piano/','/violin/','/flute/','/drum/']
 
 #main loop
 while True:
@@ -163,7 +169,7 @@ while True:
             if y > 190 and y < 210 and x > 250 and x < 290: #if quit button           
                 exit(0)
             elif y > 40 and y < 70 and x > 60 and x < 100: #if up arrow
-                if(instrument_index == 4): #out of bounds
+                if(instrument_index == 3): #out of bounds
                     instrument_index = 0
                 else:
                     instrument_index = instrument_index + 1
@@ -173,7 +179,7 @@ while True:
                 print(instrument_buttons[instrument_index])
             elif y > 170 and y < 200 and x > 60 and x < 100: #if down arrow
                 if(instrument_index == 0): #out of bounds
-                    instrument_index = 4
+                    instrument_index = 3
                 else:
                     instrument_index = instrument_index - 1
                 print('down arrow')
