@@ -94,7 +94,7 @@ def GPIO19_callback(channel):
         cmd1 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
         os.system(cmd1)
         print("recording1...")
-    elif(state1 == 2):
+    while(state1 == 2):
         cmdp1 = 'aplay /home/pi/Final/loop1.wav &'
         os.system(cmdp1)
         print("playing1...")
@@ -106,7 +106,20 @@ def GPIO26_callback(channel):
     state2 = state2 + 1 #increase state each time it is pressed
     if state2 > 2:
         state2 = 0 #reset back to state 0
-    print(state2)
+    #print(state2)
+    #different modes
+    if(state2 == 0):
+        print("stopped2")
+    elif(state2 == 1):
+        cmd2 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop2.wav -c2 -r48000 &'
+        os.system(cmd2)
+        print("recording2...")
+    while(state2 == 2):
+        cmdp2 = 'aplay /home/pi/Final/loop2.wav &'
+        os.system(cmdp2)
+        print("playing2...")
+
+
     
 GPIO.add_event_detect(27,GPIO.FALLING, callback=GPIO27_callback)
 GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
