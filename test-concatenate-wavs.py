@@ -34,6 +34,8 @@ def GPIO19_callback(channel):
     #cmd1 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
     #os.system(cmd1)
     concatenate_wav("/home/pi/Final/loop1.wav", wavefiles)
+    loop1 = AudioSegment.from_wav("output.wav")
+    play(mixed)
 
 
 def GPIO26_callback(channel):
@@ -52,6 +54,9 @@ def concatenate_wav(orders, wavs):
     	order = AudioSegment.from_wav(wav)                                                          
     	combined_wav += order      
         combined_wav.export(os.path.join(os.path.dirname(__file__), "output.wav"), format="wav")
+
+
+
 
 
 
