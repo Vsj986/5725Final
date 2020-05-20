@@ -1,35 +1,18 @@
-#writes to synthesis_fifo stored in Final
+# Basic example of turning on LEDs and handling Keypad
+# button activity.
 
-import RPi.GPIO as GPIO
-import time
+# This example uses only one Trellis board, so all loops assume
+# a maximum of 16 LEDs (0-15). For use with multiple Trellis boards,
+# see the documentation.
 import pygame
-from pygame.locals import *   # for event MOUSE variables
-import os
+import time
 import busio
 from board import SCL, SDA
 from adafruit_trellis import Trellis
+from pygame.locals import *   # for event MOUSE variables
+import setting
 from pydub import AudioSegment
 from pydub.playback import play
-#import pyaudio #these are for audio recording
-import wave
-#import setting   # import global variables
-
-os.putenv('SDL_VIDEODRIVER', 'fbcon')   # Display on piTFT
-os.putenv('SDL_FBDEV', '/dev/fb1')     
-os.putenv('SDL_MOUSEDRV', 'TSLIB')     # Track mouse clicks on piTFT
-os.putenv('SDL_MOUSEDEV', '/dev/input/touchscreen')
-
-#pygame stuff
-pygame.init()
-pygame.mouse.set_visible(False)
-WHITE = 255, 255, 255
-BLACK = 0,0,0
-GREEN = 0, 128, 0
-RED = 255, 0, 0
-CYAN = 109, 237, 226 #for background of TFT screen
-screen = pygame.display.set_mode((320, 240))
-my_font= pygame.font.Font(None, 30)
-other_font= pygame.font.Font(None, 20)
 
 # Create the I2C interface
 i2c = busio.I2C(SCL, SDA)
@@ -37,110 +20,18 @@ i2c = busio.I2C(SCL, SDA)
 # Create a Trellis object
 trellis = Trellis(i2c)  # 0x70 when no I2C address is supplied
 
-GPIO.setmode(GPIO.BCM)
+# 'auto_show' defaults to 'True', so anytime LED states change,
+# the changes are automatically sent to the Trellis board. If you
+# set 'auto_show' to 'False', you will have to call the 'show()'
+# method afterwards to send updates to the Trellis board.
 
-#list of instrument values communicated via fifo
-#change values to match frequency value to be communicated
+# # Turn on every LED
+# print("Turning all LEDs on...")
+# trellis.led.fill(True)
+# time.sleep(2)
 
-instrument_buttons = ['piano', 'violin', 'flute', 'drum']
-
-instrument_index = 0    #piano default
-
-button_states = ['stopped', 'recording', 'playback']
-
-global state1
-global state2
-state1 = 0
-state2 = 0
-
-my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit', 
-                (200,100): button_states[state1], (200,120): button_states[state2]}
-my_buttons1= {(80,120):instrument_buttons[instrument_index], (270,200):'quit'}
-my_buttons2= {(200,100): button_states[state1], (200,120): button_states[state2]}
-
-screen.fill(CYAN)               # Erase the Work space     
-for text_pos, my_text in my_buttons.items():    
-    text_surface = other_font.render(my_text, True, WHITE)    
-    rect = text_surface.get_rect(center=text_pos)
-    screen.blit(text_surface, rect)
-    
-pygame.draw.polygon(screen, WHITE, ((80,50),(70,60),(90,60))) #up arrow
-pygame.draw.polygon(screen, WHITE, ((80,190),(70,180),(90,180))) #down arrow
-    
-pygame.display.flip()
-
-#exit loop
-#end = False
-stopped = False
-
-loopcount = 0 #counts amount of loops
-timecount = 0 #timer variable
-
-GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#button callbacks
-def GPIO27_callback(channel):
-    exit(0)
-    print(27)
-
-def GPIO19_callback(channel):
-    print(19)
-    global state1
-    state1 = state1 + 1 #increase state each time it is pressed
-    if state1 > 2:
-        state1 = 0 #reset back to state 0
-
-    #different modes
-    
-    if(state1 == 0):
-        print("stopped1")
-    elif(state1 == 1):
-        cmd1 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
-        os.system(cmd1)
-        print("recording1...")
-    elif(state1==2):
-        play(mixed)
-        print("playing1...")
-        time.sleep(5)
-
-def GPIO26_callback(channel):
-    print(26)
-    global state2
-    state2 = state2 + 1 #increase state each time it is pressed
-    if state2 > 2:
-        state2 = 0 #reset back to state 0
-    #print(state2)
-    #different modes
-    
-    '''
-    if(state2 == 0):
-        print("stopped2")
-    elif(state2 == 1):
-        cmd2 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop2.wav -c2 -r48000 &'
-        os.system(cmd2)
-        print("recording2...")
-    
-    elif(state2 == 2):
-        time.sleep(0.2)
-        while state2 == 2:
-        #while state2==2 and GPIO.input(26) == GPIO.HIGH:
-            cmdp2 = 'aplay /home/pi/Final/loop2.wav &'
-            os.system(cmdp2)
-            #if GPIO.input(26) == GPIO.LOW:
-            #    break
-            print("playing2...")
-            time.sleep(5) '''
-
-
-    
-GPIO.add_event_detect(27,GPIO.FALLING, callback=GPIO27_callback)
-GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
-GPIO.add_event_detect(26,GPIO.FALLING, callback=GPIO26_callback)
-
-
-#blinkatest stuff
 # Turn on every LED, one at a time
+'''
 print("Turning on each LED, one at a time...")
 for i in range(16):
     trellis.led[i] = True
@@ -150,33 +41,54 @@ time.sleep(1)
 # Turn off every LED
 print("Turning all LEDs off...")
 trellis.led.fill(False)
-time.sleep(2)
+time.sleep(2)'''
+
+# # Turn off every LED, one at a time
+# print("Turning off each LED, one at a time...")
+# for i in range(15, 0, -1):
+#     trellis.led[i] = False
+#     time.sleep(0.1)
+
+# Now start reading button activity
+# - When a button is depressed (just_pressed),
+#   the LED for that button will turn on.
+# - When the button is relased (released),
+#   the LED will turn off.
+# - Any button that is still depressed (pressed_buttons),
+#   the LED will remain on.
+
+#init pydub stuff
+loop1 = AudioSegment.from_wav("/home/pi/Final/loop1.wav")
+
+loop2 = AudioSegment.from_wav("/home/pi/Final/loop2.wav")
+
+length = len(loop1)
+
+mixed = loop2[:length].overlay(loop1)
+
 
 print("Starting button sensory loop...")
 pressed_buttons = set()
 
 #pygame.mixer.pre_init(44100,16,2,4096)
+pygame.init()
 pygame.mixer.init()
 
 wavefiles = ['01.wav','02.wav','03.wav','04.wav','05.wav','06.wav','07.wav','08.wav',
   '09.wav','10.wav','11.wav','12.wav','13.wav','14.wav','15.wav','16.wav']
 
 
-paths = ['/piano/','/violin/','/flute/','/drum/']
+inst = setting.index   # instrument index
+paths = ['/piano/','/violin/','/piano/','/flute/','/drum/']
 
-#main loop
 while True:
-    time.sleep(0.02)
-    #timer
-    loopcount = loopcount + 1
-    if loopcount == 50: #1 second has passed
-        timecount = timecount + 1
-        loopcount = 0
-
-    #audio stuff from blinkatest
+    # Make sure to take a break during each trellis.read_buttons
+    # cycle.
+    time.sleep(0.1)
+    
     just_pressed, released = trellis.read_buttons()
     for b in just_pressed:
-        name = '/home/pi/Final' + paths[instrument_index] + wavefiles[b]
+        name = '/home/pi/Final' + paths[3] + wavefiles[b]
         pygame.mixer.Channel(0).play(pygame.mixer.Sound(name))
         #pygame.mixer.music.load(name)
         #pygame.mixer.music.play(0)
@@ -191,140 +103,5 @@ while True:
         print("still pressed:", b)
         trellis.led[b] = True
 
-    #change GUI
-    for event in pygame.event.get():        
-        if(event.type is MOUSEBUTTONDOWN):            
-            pos = pygame.mouse.get_pos()
-            screen.fill(CYAN)
-            for text_pos, my_text in my_buttons.items():    
-                text_surface = other_font.render(my_text, True, WHITE)    
-                rect = text_surface.get_rect(center=text_pos)
-                screen.blit(text_surface, rect)
-            pygame.draw.polygon(screen, WHITE, ((80,50),(70,60),(90,60))) #up arrow
-            pygame.draw.polygon(screen, WHITE, ((80,190),(70,180),(90,180))) #down arrow
-        elif(event.type is MOUSEBUTTONUP):            
-            pos = pygame.mouse.get_pos() 
-            x,y = pos
-            if y > 190 and y < 210 and x > 250 and x < 290: #if quit button           
-                exit(0)
-            elif y > 40 and y < 70 and x > 60 and x < 100: #if up arrow
-                if(instrument_index == 3): #out of bounds
-                    instrument_index = 0
-                else:
-                    instrument_index = instrument_index + 1
 
-                print('up arrow')
-                print(instrument_index)
-                print(instrument_buttons[instrument_index])
-            elif y > 170 and y < 200 and x > 60 and x < 100: #if down arrow
-                if(instrument_index == 0): #out of bounds
-                    instrument_index = 3
-                else:
-                    instrument_index = instrument_index - 1
-                print('down arrow')
-                print(instrument_index)
-                print(instrument_buttons[instrument_index])
-            
-    
-    ### added
-    if GPIO.input(19) == GPIO.LOW or GPIO.input(26) == GPIO.LOW:
-        screen.fill(CYAN)
-        pygame.draw.polygon(screen, WHITE, ((80,50),(70,60),(90,60))) #up arrow
-        pygame.draw.polygon(screen, WHITE, ((80,190),(70,180),(90,180))) #down arrow
-                    
-        my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit',
-                    (200,100): button_states[state1], (200,120): button_states[state2]}
-
-        for text_pos, my_text in my_buttons.items():    
-            text_surface = other_font.render(my_text, True, WHITE)    
-            rect = text_surface.get_rect(center=text_pos)
-            screen.blit(text_surface, rect)
-        pygame.display.flip()
-        
-        
-        if state1 ==1:
-            cmd1 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
-            os.system(cmd1)
-            print("recording1...")
-        elif state1 == 2:
-            while state1 ==2:
-                #while GPIO.input(26) == GPIO.HIGH:
-                cmdp1 = 'aplay -c 1 /home/pi/Final/loop1.wav &'
-                os.system(cmdp1)
-                #if GPIO.input(26) == GPIO.LOW:
-                #    break
-                print("playing1...")
-                
-                
-                ##### play channel 2 while channel 1 playing
-                if state2 ==1:
-                    cmd2 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop2.wav -c2 -r48000 &'
-                    os.system(cmd2)
-                    print("recording2...")
-                '''
-                elif state2 == 2:
-                    while state2 ==2:
-                        #while GPIO.input(26) == GPIO.HIGH:
-                        cmdp2 = 'aplay -c 2 /home/pi/Final/loop2.wav &'
-                        os.system(cmdp2)
-                        #if GPIO.input(26) == GPIO.LOW:
-                        #    break
-                        print("playing2...")'''
-        
-        if state2 ==1:
-            cmd2 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop2.wav -c2 -r48000 &'
-            os.system(cmd2)
-            print("recording2...")
-        elif state2 == 2:
-            while state2 ==2:
-                #while GPIO.input(26) == GPIO.HIGH:
-                cmdp2 = 'aplay -c 2 /home/pi/Final/loop2.wav &'
-                os.system(cmdp2)
-                #if GPIO.input(26) == GPIO.LOW:
-                #    break
-                print("playing2...")
-                if state1 ==1:
-                    cmd1 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
-                    os.system(cmd1)
-                    print("recording1...")
-    else:
-        screen.fill(CYAN)
-        pygame.draw.polygon(screen, WHITE, ((80,50),(70,60),(90,60))) #up arrow
-        pygame.draw.polygon(screen, WHITE, ((80,190),(70,180),(90,180))) #down arrow
-                    
-        my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit',
-                        (200,100): button_states[state1], (200,120): button_states[state2]}
-
-        for text_pos, my_text in my_buttons.items():    
-            text_surface = other_font.render(my_text, True, WHITE)    
-            rect = text_surface.get_rect(center=text_pos)
-            screen.blit(text_surface, rect)
-        pygame.display.flip()
-        
-        
-    ###
-    '''
-    if GPIO.input(26) == GPIO.LOW:
-        if state2 ==1:
-            cmd2 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop2.wav -c2 -r48000 &'
-            os.system(cmd2)
-            print("recording2...") 
-        elif state2 ==2:
-            #while GPIO.input(26) == GPIO.HIGH:
-            cmdp2 = 'aplay /home/pi/Final/loop2.wav &'
-            os.system(cmdp2)
-            #if GPIO.input(26) == GPIO.LOW:
-            #    break
-            print("playing2...")
-            time.sleep(5)
-        my_buttons= {(80,120):instrument_buttons[instrument_index], (270,200):'quit',
-                    (200,100): button_states[state1], (200,120): button_states[state2]}
-
-        for text_pos, my_text in my_buttons.items():    
-            text_surface = other_font.render(my_text, True, WHITE)    
-            rect = text_surface.get_rect(center=text_pos)
-            screen.blit(text_surface, rect)
-        pygame.display.flip()'''
-    
-
-GPIO.cleanup()
+    play(mixed)
