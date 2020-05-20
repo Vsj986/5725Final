@@ -1,4 +1,5 @@
 """
+Original playback
 Support for playing AudioSegments. Pyaudio will be used if it's installed,
 otherwise will fallback to ffplay. Pyaudio is a *much* nicer solution, but
 is tricky to install. See my notes on installing pyaudio in a virtualenv (on
