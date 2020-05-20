@@ -32,12 +32,9 @@ instrument_buttons = ['piano', 'violin', 'flute', 'drum']
 instrument_index = 0    #piano default
 button_states = ['stopped', 'recording', 'playback']
 
-global state1
-global state2
+# keypad mode if 1, looper mode if 2
 global mode
 mode = 1
-state1 = 0
-state2 = 0
 
 my_buttons= {(60,120):instrument_buttons[instrument_index], (270,200):'quit',
              (200,60):'wait for ready', (200,110):'click here to switch mode',
@@ -74,7 +71,7 @@ wavefiles = ['01.wav','02.wav','03.wav','04.wav','05.wav','06.wav','07.wav','08.
   '09.wav','10.wav','11.wav','12.wav','13.wav','14.wav','15.wav','16.wav']
 
 inst = setting.index   # instrument index
-paths = ['/piano/','/violin/','/piano/','/flute/','/drum/']
+paths = ['/piano/','/violin/','/flute/','/drum/']
 
 #init pydub stuff
 loop1 = AudioSegment.from_wav("/home/pi/Final/loop1.wav")
@@ -151,8 +148,6 @@ def GPIO19_callback(channel):
     my_buttons[(200,140)] = "cha1: not recording"
     update_screen()
     
-
-
 def GPIO26_callback(channel):
     print("callback 26")
     global mode
@@ -167,7 +162,6 @@ def GPIO26_callback(channel):
     update_screen()
     
  
-
 GPIO.add_event_detect(27,GPIO.FALLING, callback=GPIO27_callback)
 GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
 GPIO.add_event_detect(26,GPIO.FALLING, callback=GPIO26_callback)
@@ -181,14 +175,7 @@ while True:
     for event in pygame.event.get():        
         if(event.type is MOUSEBUTTONDOWN):            
             pos = pygame.mouse.get_pos()
-            update_screen()
-#             screen.fill(CYAN)
-#             for text_pos, my_text in my_buttons.items():    
-#                 text_surface = other_font.render(my_text, True, WHITE)    
-#                 rect = text_surface.get_rect(center=text_pos)
-#                 screen.blit(text_surface, rect)
-#             pygame.draw.polygon(screen, WHITE, ((80,50),(70,60),(90,60))) #up arrow
-#             pygame.draw.polygon(screen, WHITE, ((80,190),(70,180),(90,180))) #down arrow
+            #update_screen()
         elif(event.type is MOUSEBUTTONUP):            
             pos = pygame.mouse.get_pos() 
             x,y = pos
@@ -200,7 +187,7 @@ while True:
                     instrument_index = 0
                 else:
                     instrument_index = instrument_index + 1
-                my_buttons[(80,120)] = instrument_buttons[instrument_index]
+                my_buttons[(60,120)] = instrument_buttons[instrument_index]
                 update_screen()
 
                 print('up arrow')
@@ -211,7 +198,7 @@ while True:
                     instrument_index = 3
                 else:
                     instrument_index = instrument_index - 1
-                my_buttons[(80,120)] = instrument_buttons[instrument_index]
+                my_buttons[(60,120)] = instrument_buttons[instrument_index]
                 update_screen()
                 print('down arrow')
                 print(instrument_index)
@@ -224,13 +211,13 @@ while True:
                     mode = 1 # keypad mode
                     my_buttons[(200,60)] = "Current mode: Keypad"
                 update_screen()
+                
+    # keypad mode
     if mode == 1:
         just_pressed, released = trellis.read_buttons()
         for b in just_pressed:
-            name = '/home/pi/Final' + paths[3] + wavefiles[b]
+            name = '/home/pi/Final' + paths[instrument_index] + wavefiles[b]
             pygame.mixer.Channel(0).play(pygame.mixer.Sound(name))
-            #pygame.mixer.music.load(name)
-            #pygame.mixer.music.play(0)
             print("pressed:", b)
             trellis.led[b] = True
         pressed_buttons.update(just_pressed)
@@ -241,6 +228,8 @@ while True:
         for b in pressed_buttons:
             print("still pressed:", b)
             trellis.led[b] = True
+    
+    # looper mode
     if mode == 2:
         # mixing channel 1 and 2 together
         loop1 = AudioSegment.from_wav("/home/pi/Final/loop1.wav")
@@ -249,9 +238,4 @@ while True:
         mixed = loop2[:length].overlay(loop1)
         play(mixed)
             
-
-            
-
-
-        
 
