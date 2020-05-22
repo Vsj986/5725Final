@@ -10,7 +10,6 @@ import setting
 from pydub import AudioSegment
 from pydub.playback import play
 
-
 os.putenv('SDL_VIDEODRIVER', 'fbcon')   # Display on piTFT
 os.putenv('SDL_FBDEV', '/dev/fb1')     
 os.putenv('SDL_MOUSEDRV', 'TSLIB')     # Track mouse clicks on piTFT
@@ -60,12 +59,10 @@ pygame.draw.polygon(screen, BLACK, ((60,50),(50,60),(70,60))) #up arrow
 pygame.draw.polygon(screen, BLACK, ((60,190),(50,180),(70,180))) #down arrow
 pygame.display.flip()
 
-
 # Create the I2C interface
 i2c = busio.I2C(SCL, SDA)
 # Create a Trellis object
 trellis = Trellis(i2c)  # 0x70 when no I2C address is supplied
-
 
 # instrument files
 wavefiles = ['01.wav','02.wav','03.wav','04.wav','05.wav','06.wav','07.wav','08.wav',
@@ -160,8 +157,7 @@ def GPIO26_callback(channel):
     time.sleep(6)
     mode = 2
     my_buttons[(200,160)] = "cha2: not recording"
-    update_screen()
-    
+    update_screen()    
  
 GPIO.add_event_detect(27,GPIO.FALLING, callback=GPIO27_callback)
 GPIO.add_event_detect(19,GPIO.FALLING, callback=GPIO19_callback)
@@ -248,5 +244,3 @@ while True:
         mixed = loop2[:length].overlay(loop1)
         play(mixed)
         if (mode ==1): print("swiching back to keypad")
-            
-
