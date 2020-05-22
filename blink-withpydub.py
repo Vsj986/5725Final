@@ -10,14 +10,15 @@ import setting
 from pydub import AudioSegment
 from pydub.playback import play
 
-#os.putenv('SDL_VIDEODRIVER', 'fbcon')   # Display on piTFT
-#os.putenv('SDL_FBDEV', '/dev/fb1')     
+
+os.putenv('SDL_VIDEODRIVER', 'fbcon')   # Display on piTFT
+os.putenv('SDL_FBDEV', '/dev/fb1')     
 os.putenv('SDL_MOUSEDRV', 'TSLIB')     # Track mouse clicks on piTFT
 os.putenv('SDL_MOUSEDEV', '/dev/input/touchscreen')
 
 #initialize pygame and tft
 pygame.init()
-pygame.mouse.set_visible(True)
+pygame.mouse.set_visible(False)
 WHITE = 255, 255, 255
 BLACK = 0,0,0
 GREEN = 0, 128, 0
@@ -74,9 +75,9 @@ inst = setting.index   # instrument index
 paths = ['/piano/','/violin/','/flute/','/drum/']
 
 #init pydub stuff
-loop1 = AudioSegment.from_wav("/home/pi/Final/loop1.wav")
+loop1 = AudioSegment.from_wav("/home/pi/Final/default1.wav")
 
-loop2 = AudioSegment.from_wav("/home/pi/Final/loop2.wav")
+loop2 = AudioSegment.from_wav("/home/pi/Final/default2.wav")
 
 length = len(loop1)
 
@@ -142,9 +143,9 @@ def GPIO19_callback(channel):
 
     my_buttons[(200,140)] = "cha1: recording"
     update_screen()
-    cmd1 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
+    cmd1 = 'arecord -D hw:1,0 -d 6 -f S24_3LE /home/pi/Final/loop1.wav -c2 -r48000 &'
     os.system(cmd1)
-    time.sleep(5)
+    time.sleep(6)
     my_buttons[(200,140)] = "cha1: not recording"
     update_screen()
     
@@ -154,9 +155,9 @@ def GPIO26_callback(channel):
     mode = 1
     my_buttons[(200,160)] = "cha2: recording"
     update_screen()
-    cmd2 = 'arecord -D hw:1,0 -d 5 -f S24_3LE /home/pi/Final/loop2.wav -c2 -r48000 &'
+    cmd2 = 'arecord -D hw:1,0 -d 6 -f S24_3LE /home/pi/Final/loop2.wav -c2 -r48000 &'
     os.system(cmd2)
-    time.sleep(5)
+    time.sleep(6)
     mode = 2
     my_buttons[(200,160)] = "cha2: not recording"
     update_screen()
@@ -182,7 +183,7 @@ while True:
             if y > 190 and y < 210 and x > 250 and x < 290: #if quit button
                 mode = 1
                 exit(0)
-            elif y > 40 and y < 70 and x > 60 and x < 100: #if up arrow
+            elif y > 40 and y < 70 and x > 50 and x < 90: #if up arrow
                 if(instrument_index == 3): #out of bounds
                     instrument_index = 0
                 else:
@@ -193,7 +194,7 @@ while True:
                 print('up arrow')
                 print(instrument_index)
                 print(instrument_buttons[instrument_index])
-            elif y > 170 and y < 200 and x > 60 and x < 100: #if down arrow
+            elif y > 170 and y < 200 and x > 50 and x < 90: #if down arrow
                 if(instrument_index == 0): #out of bounds
                     instrument_index = 3
                 else:
@@ -203,7 +204,7 @@ while True:
                 print('down arrow')
                 print(instrument_index)
                 print(instrument_buttons[instrument_index])
-            elif y > 100 and y < 120 and x > 100 and x < 300: #if switch mode button
+            elif y > 80 and y < 140 and x > 100 and x < 300: #if switch mode button
                 if mode == 1:
                     mode = 2 # looper mode
                     my_buttons[(200,60)] = "Current mode: Looper"
@@ -232,10 +233,20 @@ while True:
     # looper mode
     if mode == 2:
         # mixing channel 1 and 2 together
-        loop1 = AudioSegment.from_wav("/home/pi/Final/loop1.wav")
-        loop2 = AudioSegment.from_wav("/home/pi/Final/loop2.wav")
+        if len(loop1) >= 5000:
+            loop1 = loop1[:5000]
+        if len(loop2) >= 5000:
+            loop2 = loop2[:5000]
+        try:
+            loop1 = AudioSegment.from_wav("/home/pi/Final/loop1.wav")
+            loop2 = AudioSegment.from_wav("/home/pi/Final/loop2.wav")
+        except IndexError:
+            print("try-except: index out of arange")
+            loop1 = AudioSegment.from_wav("/home/pi/Final/default1.wav")
+            loop2 = AudioSegment.from_wav("/home/pi/Final/default2.wav")
         length = len(loop1)
         mixed = loop2[:length].overlay(loop1)
         play(mixed)
+        if (mode ==1): print("swiching back to keypad")
             
 
