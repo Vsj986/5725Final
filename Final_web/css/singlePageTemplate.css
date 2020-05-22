@@ -22,8 +22,10 @@ body {
 }
 /* Navigation */
 header {
+	position: fixed;
+	top: 0;
 	width: 100%;
-	height: 5%;
+	height: 6.5%;
 	background-color: #38A2B2;
 	border-bottom: 1px solid #2C9AB7;
 }
@@ -39,10 +41,11 @@ header {
 	/*font-family: Baskerville, "Palatino Linotype", Palatino, "Century Schoolbook L", "Times New Roman", serif;*/
 }
 nav {
-	float: right;
+    float: right;
 	width: %;
-	text-align: right;
-	margin-right: 80px;
+    text-align: right;
+    margin-right: 80px;
+    font-weight: bold;
 }
 header nav ul {
 	list-style: none;
