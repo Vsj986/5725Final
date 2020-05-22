@@ -12,11 +12,13 @@ body {
 }
 /* Container */
 .container {
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-	height: 1000px;
-	background-color: #FFFFFF;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 1000px;
+    background-color: #FFFFFF;
+    border-width: thick;
+    text-align: left;
 }
 /* Navigation */
 header {
@@ -32,7 +34,7 @@ header {
 	width: 6%;
 	float: left;
 	margin-top: 15px;
-	margin-left: 25px;
+	margin-left: 80px;
 	letter-spacing: 4px;
 	/*font-family: Baskerville, "Palatino Linotype", Palatino, "Century Schoolbook L", "Times New Roman", serif;*/
 }
@@ -40,7 +42,7 @@ nav {
 	float: right;
 	width: %;
 	text-align: right;
-	margin-right: 25px;
+	margin-right: 80px;
 }
 header nav ul {
 	list-style: none;
@@ -74,33 +76,38 @@ ul li:hover a {
 }
 /* Hero Section */
 .hero {
-	background-color: #B3B3B3;
-	padding-top: 150px;
-	padding-bottom: 150px;
-	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
-	background-image:url("../images/button_pad.jpg");
-    background-repeat:no-repeat;
-  	background-size:cover;}
+    background-color: #B3B3B3;
+    padding-top: 150px;
+    padding-bottom: 150px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+    background-image: url("../images/button_pad.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: x-large;
 }
+
 .light {
 	font-weight: bold;
 	color: #717070;
 }
 .tagline {
-	text-align: center;
-	color: #FFFFFF;
-	margin-top: 4px;
-	font-weight: bolder;
-	text-transform: uppercase;
-	letter-spacing: 1px;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 4px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: medium;
 }
 
 
 
 /* Intro Section */
 .intro {
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 150px;
+	padding-right: 150px;
 	padding-top: 35px;
 	/*display: contents;*/
 	display: inline-block;
@@ -114,8 +121,8 @@ ul li:hover a {
 
 /* Design & Testing Section */
 .des_test {
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 150px;
+	padding-right: 150px;
 	padding-top: 35px;
 	display: inline-block;
 	background-color: #FFFFFF;
@@ -128,8 +135,8 @@ ul li:hover a {
 
 /* Rsults Section */
 .results {
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 150px;
+	padding-right: 150px;
 	padding-top: 35px;
 	display: inline-block;
 	background-color: #FFFFFF;
@@ -142,8 +149,8 @@ ul li:hover a {
 
 /* Conclusions Section */
 .conclusions {
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 150px;
+	padding-right: 150px;
 	padding-top: 35px;
 	display: inline-block;
 	background-color: #FFFFFF;
@@ -156,8 +163,8 @@ ul li:hover a {
 
 /* Future Work Section */
 .future {
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 150px;
+	padding-right: 150px;
 	padding-top: 35px;
 	display: inline-block;
 	background-color: #FFFFFF;
@@ -170,22 +177,26 @@ ul li:hover a {
 
 /* Budget Section */
 .budget {
-	padding-left: 25px;
-	padding-right: 25px;
-	padding-top: 35px;
-	display: inline-block;
-	background-color: #FFFFFF;
-	margin-top: 0px;
-	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
-	font-style: normal;
-	font-weight: lighter;
-	font-size: large;
+    width: 90%;
+    padding-left: 150px;
+	padding-right: 150px;
+    padding-top: 35px;
+    display: list-item;
+    background-color: #FFFFFF;
+    margin-top: 0px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: large;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* References Section */
 .refer {
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 150px;
+	padding-right: 150px;
 	padding-top: 35px;
 	display: inline-block;
 	background-color: #FFFFFF;
@@ -198,8 +209,8 @@ ul li:hover a {
 
 /* Code Appendix Section */
 .code {
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 150px;
+	padding-right: 150px;
 	padding-top: 35px;
 	display: inline-block;
 	background-color: #FFFFFF;
@@ -208,6 +219,27 @@ ul li:hover a {
 	font-style: normal;
 	font-weight: lighter;
 	font-size: large;
+}
+
+/* Code Styles */
+
+Sharing an example I use in website, I do use following pre in my stylesheet:
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
 }
 
 .button {
