@@ -107,14 +107,18 @@ ul li:hover a {
 }
 
 /* Demo Section*/
+/* Intro Section */
 .demo {
-    padding-top: 30px;
-    background-color: #FFFFFF;
-    margin-top: 50px;
-    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: large;
+	padding-left: 150px;
+	padding-right: 150px;
+	padding-top: 35px;
+	display: inline-block;
+	background-color: #FFFFFF;
+	margin-top: 0px;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: large;
 }
 
 /* Objective Section */
