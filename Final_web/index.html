@@ -25,7 +25,8 @@
     </a>
     <nav>
       <ul>
-        <!--<li><a href="#hero">Objective</a></li>-->
+        <li><a href="#obj">Objective</a></li>
+        
         <li> <a href="#intro">Introduction</a></li>
         <li> <a href="#des_test">Design & Testing</a></li>
 		<li> <a href="#results">Results</a></li>
@@ -37,6 +38,7 @@
       </ul>
     </nav>
   </header>
+	
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <h2 class="hero_header">Music Looper</h2>
@@ -49,67 +51,215 @@
     <p class="tagline">&nbsp;</p>
     <p class="tagline">&nbsp;</p>
   </section>
-	
+
+<!-- Demo Section -->
+  <section class="demo" id="demo">
+	<p align="center">
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/N1aFMk_IFZg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></iframe></p>
+	<p align="center">Project Demo Video</p>
+	</section>
+
+<!-- Objective Section -->
+  <section class="obj" id="obj">
+	<h2>Objective</h2>
+	<p> Our objective is to create an audio looper with multiple channels, in which one can record short sound bites to be overlayed with one another for quick music production. We also want our project to have a keypad that can be used to play a variety of instruments that can also be recorded and looped over one another. </p>
+  </section>
 
 <!-- Intro Section -->
   <section class="intro" id="intro">
-	<!--<iframe src="https://www.youtube.com/watch?v=N1aFMk_IFZg">-->
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/N1aFMk_IFZg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></iframe>
 	<h2>Introduction</h2>
-	<p> This is the introduction section.  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+	<p> For our final project, we created an audio looper device using a Raspberry Pi with a keypad capable of playing multiple instrument sounds. Our project has two modes: Keypad mode, which allows users to select instruments and record sound-bites in up to two audio channels using the light-up keypad; and Looper mode, which, when activated, overlays the sound in the two audio channels to create a repetitive audio loop. This project is useful to quickly create music tracks, and is targeted at new musicians starting out on creating songs and remixes. </p>
   </section>
 	
   <!-- Design & Testing Section -->
   <section class="des_test" id="des_test">
     <h2>Design & Testing</h2>
-    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-  </section>
+	<h4><em>Initial Ideas</em></h4>
+    <p> Our project has certainly undergone some revision since our initial proposal. We started with the idea that we wanted to create an audio device with looping functionality and a keypad that generates sounds from a selection of instruments when keys are pressed. This audio device should also be able to record the user’s voice with a microphone. Below are some preliminary diagrams and drawings to demonstrate the components of our project: </p>
+	
+  <figure>
+		<div class="row">
+		<div class="column">
+		<figure><img src="images/initial1.png" alt="fig1" style="width:100%">
+			<figurecaption>Figure 1 (a)</figurecaption>
+			</figure>
+		</div>
+		<div class="column">
+		  <figure><img src="images/initial2.png" alt="fig1" style="width:100%">
+			<figurecaption>Figure 1 (b)</figurecaption>
+			</figure>
+		</div>
+	</div>
+	  <figurecaption>Figure 1. Preliminary Designs for our Music Looper</figurecaption>
+	</figure>	 
+    <p>In our initial design, we wanted to include the capability to modify the sound as it is being played, with potentiometers and sliders. However, due to time constraints, we realized that this would be a difficult thing to implement and ultimately not a necessary feature of our final product. </p>
+	  
+	<h4><em>PiTFT Display Implementation</em></h4>
+    <p>To create the interactive touchscreen display on the PiTFT, we utilized the PyGame library. We wanted our display to be simple and easy to interact with, while also showing all the necessary information in real-time. At the top of the screen, we show the mode (Keypad or Looper) that the device is in. In Keypad mode, on the left side of the screen, users are able to press the arrows to select between a variety of instruments to play. Whichever instrument is shown between the arrows is the instrument which will be played as the user presses buttons on the keypad. In the middle of the screen, there is text that reads “Click here to switch mode”. When that text is clicked, the device will switch to the other mode, and the mode shown at the top of the screen will be updated. 
+ </p>
+	  <p>
+		  <figure>
+		<div class="row">
+		<div class="column">
+		<figure><img src="images/mode1.jpg" alt="fig1" style="width:100%">
+			<figurecaption>Figure 2 (a)</figurecaption>
+			</figure>
+		</div>
+		<div class="column">
+		  <figure><img src="images/mode2.jpg" alt="fig1" style="width:100%">
+			<figurecaption>Figure 2 (b)</figurecaption>
+			</figure>
+		</div>
+	</div>
+	  <figurecaption>Figure 2(a) Music Looper Display when in Keypad mode. (b) Music Looper in Looper mode.</figurecaption>
+	</figure>	
+	  </p>
+	  <p>Another feature of the display is showing when the device is recording. When one of the two external buttons are pressed, audio will be recorded for five seconds into the corresponding channel. As soon as audio for one channel begins recording, the TFT display will update the text next to the corresponding channel label, which will read “recording”. After five seconds, the text next to the channel label will return to reading “not recording”, to show the recording has finished. Users are able to record in both Keypad and Looper mode, but in Looper mode, the keypad functionality will be disabled, so they are only able to record voice. 
+ </p>
+	<figure>
+		<div class="row">
+		<div class="column">
+		<figure><img src="images/record1.jpg" alt="fig1" style="width:100%">
+			<figurecaption>Figure 3(a)</figurecaption>
+			</figure>
+		</div>
+		<div class="column">
+		  <figure><img src="images/record2.jpg" alt="fig1" style="width:100%">
+			<figurecaption>Figure 3(b)</figurecaption>
+			</figure>
+		</div>
+	</div>
+		<figurecaption>Figure 3(a) Device in Keypad mode, recording into Channel2. (b) Device in Looper mode, recording into Channel1.</figurecaption>
+	</figure>	
+	  
+	 <h4><em>Keypad</em></h4>
+	  <p>We chose to use the Adafruit 4x4 Trellis Keypad for this project, because it is very easy to connect and works well with the Raspberry Pi. Additionally, it is well-documented by Adafruit, which makes it very easy to test and understand its functionality. 
+	  </p>
+	  <figure>
+		<div class="row">
+		<div class="column">
+		<figure><img src="images/pad1.png" alt="fig1" style="width:100%">
+			<figurecaption>Figure 4(a)</figurecaption>
+			</figure>
+		</div>
+		<div class="column">
+		  <figure><img src="images/pad2.png" alt="fig1" style="width:100%">
+			<figurecaption>Figure 4(b)</figurecaption>
+			</figure>
+		</div>
+	</div>
+		<figurecaption>Figure 4(a) Our Keypad with all LEDs lit up. (b) LEDs light up when a button is pressed.</figurecaption>
+	</figure>	
+	  <p>To prepare the keypad, we soldered 16 LEDs of varying colors to the PCB. Using our breadboard, we connected the keypad to the Pi so that it could communicate via the I2C interface, following the diagram and instructions given by [3]:
+</p>
+	  <figure><img src="images/figure5.png" alt="fig1" style="width:40%">
+			<p><figurecaption>Figure 5. I2C Connection Between Trellis Keypad and Raspberry Pi (via learn.adafruit.com)</figurecaption></p>
+			</figure>
+	  <p>To implement the audio sounds, we downloaded 16 sounds from each instrument: piano, flute, violin, and drum. We got these sounds from Freesound, a website that provides thousands of non-copyrighted sounds. Next, we converted each sound to 16-bit .wav files using Audacity and stored each group of 16 instrument sounds in a separate folder on the Raspberry Pi. We added Pygame commands to the key detection code from [3], and were able to play sounds using a speaker connected via the audio jack while pressing keys on the keypad.
+</p>
+	  <h4><em>Recording</em></h4>
+	  <p>We definitely ran into a lot of roadblocks while implementing recording. Initially, to attempt recording audio from a USB mic, we wanted to use the PyAudio library, which could be used to write code that could let the mic record sound and have the recording be stored as a .wav file on the Raspberry Pi. Unfortunately, when installing this library, we realized it could not be supported by the Raspbian release that our Pi was running, and it ended up updating the release, which caused us to lose all functionality of our other features. 
 
+</p>
+	  <p>Once we were able to restore our work from before, we decided to implement audio recording with a new approach: using ALSA commands. This was actually a much simpler implementation, since we could just call an ALSA command from our Python script via OS in a single line. This would occur in button interrupts, since the recording should trigger when a button is pressed. Our device had two simple, external buttons connected to GPIO pins on the Pi, each corresponding to one recording channel (shown on the PiTFT). When one button was pressed, the Pi would trigger an interrupt. 
+</p>
+	  <figure><img src="images/figure8.jpg" alt="fig1" style="width:40%">
+			<p><figurecaption>Figure 6. Simple buttons connected to GPIO pins on the Raspberry Pi.
+</figurecaption></p>
+			</figure>
+	  <p>Within the interrupt handler, we would change the PiTFT text to show that the channel was recording, then call the “arecord” command to start recording, then change the text on the PyGame display back to “not recording”. Because the recording feature was occurring within button interrupts, this allowed for us to record in both the Keypad and Looper modes.
+</p>
+	  <h4><em>Looping & Playback</em></h4>
+	  <p>One of the more difficult features of our device to implement was looping the audio that had been recorded. We wanted to play audio from both channels at the same time. Initially, we also tried to do this using ALSA commands, since these only took up one line. However, this proved difficult because we could not properly overlay both sounds, even while running one command in the background and one in the foreground.</p>
+	  <p>After looking more into overlaying audio, we came across the PyDub library, which was created for the purpose of easily manipulating audio through Python. This library was easy to install and already had a command for the purpose of overlaying two audio files and storing the result in a third audio file. We implemented this in the main While loop in our code, so that the overlaid audio file would constantly be updated each time our code looped. Unfortunately, each time we called for the audio to be played, this would stop updating Pygame, so the Keypad would not work at the same time as looping. This is why we decided to implement two separate modes to ensure that all of our main features worked properly.</p>
+</p>
+	  <h4><em>Testing</em></h4>
+	  <p>Because we were in two separate locations for the duration of this project, thus needing to work remotely, it made it very difficult to test different parts of the code. Luckily, we were given instructions to use SSH to access the Raspberry Pi remotely. Since Sijin physically had the Raspberry Pi, she connected it to a desktop monitor, and Jamie would use SSH to log into the Pi when needing to test a part of the code. Additionally, we constantly utilized our GitHub to push and pull code for the other to use and test. Often times, if Jamie was unable to log into the Pi because Sijin was testing another part of the code, Jamie would install the necessary libraries on her personal computer and run the code, pushing necessary changes to the GitHub. This allowed for both of us to have and test the same code, even while apart. 
+</p>
+  </section>
+	
 	
  
 <!-- Results Section -->
   <section class="results" id="results">
     <h2>Results</h2>
-    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+    <p> Overall, we were very successful in the implementation of our project. This device has both keypad and looping functionality, and is very easy for a beginner to use and create songs. Both device modes work very well, and it is very easy to switch between the two modes using the TFT display. Additionally, the device records sound very well, and does allow a variety of instruments to be played using the keypad and selecting the instrument on the touchscreen display. However, one thing we were unable to implement was sound modification using potentiometers, because we would need to utilize an Analog-to-Digital converter, which we simply did not have. Despite this, we certainly have met our goals for this project. 
+ </p>
+	  <figure><img src="images/figure9.jpg" alt="fig1" style="width:40%">
+			<p><figurecaption>Figure 7. Our final implementation.
+</figurecaption></p>
   </section>
 	
 <!-- Conclusions Section -->
   <section class="conclusions" id="conclusions">
     <h2>Conclusions</h2>
-    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+    <p> Our project was able to achieve both keypad and looper functionality, for users to create music in new and interesting ways. We also were impressed that we were able to implement recording functionality via a USB mic attached to the Raspberry Pi, because we had difficulties attempting to install the PyAudio library for recording since it did not work with our version of Raspbian. Unfortunately, one thing that we found that did not work was allowing for the keypad to work when the audio was looping. Because we used the PyGame Mixer to play audio from the keypad, and the PyDub library to allow for looping and overlay, it would have been impossible for the Raspberry Pi to play both kinds of sounds at once. Overall, we were able to achieve many impressive feats with this project, and we certainly would add more interesting features if time allowed.
+ </p>
   </section>
 	
 <!-- Future Work Section -->
   <section class="future" id="future">
     <h2>Future Work</h2>
-    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+    <p> If we had a longer timeframe to work on our project, we would definitely try to implement simultaneous functionality of the keypad and looping. We would likely need to create some sort of concurrency algorithm that runs one mode in the foreground and one in the background, or utilize the PyGame library to play the recorded audio files in multiple audio channels in the PyGame mixer. The reason we were unable to do the latter during this project was because PyGame is only able to play .wav files that are converted to signed 16-bit, which cannot be done automatically in the code. Perhaps if we had more time we could look into a conversion method for the recorded audio files to get them to play with the PyGame mixer, instead of using the PyDub library. 
+</p>
+	  <p>Additionally, if we had more time, we would have liked to implement real-time sound modification, such as adjusting the echo, fade, or bass of an audio loop using potentiometers. In order to do this, we would need to implement analog-to-digital conversion. This would certainly have been possible within our timeframe if we had been working in lab and been given more components such as capacitors, but from a remote workspace, it was more difficult to work on this implementation. 
+</p>
   </section>
 	
 <!--  Budget Section -->
   <section class="budget" id="budget">
     <h2>Budget</h2>
-    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+	<ul>
+		<li>The Raspberry Pi system, buttons, LEDs and resistors -Provided by lab</li>
+		<li>Adafruit Trellis Monochrome Driver PCB for 4x4 Keypad & 3mm LEDs -$9.95</li>
+		<li>Silicone Elastomer 4x4 Button Keypad - for 3mm LEDs -$4.95</li>
+		<li>Blue Yeti Nano Premium USB Mic for Recording -Already owned</li>
+		<li>JBL Charge 4 - Portable Bluetooth Speaker -Already owned</li>
+	</ul>  
+	  <p>Total: $14.9</p>
   </section>
 	
 <!-- References Section -->
   <section class="refer" id="refer">
     <h2>References</h2>
-    <p> <a href="https://courses.ece.cornell.edu/ece5990/ECE5725_Fall2019_Projects/Dec_06_Demo/SoundPad/ws442_xc437_Wednesday/index.html">Soundpad (5725 Fall 2019 Project)</a></p>
-	<p><a href="https://learn.adafruit.com/adafruit-trellis-diy-open-source-led-keypad/downloads">Adafruit Trellis Datasheet and Instructions </a></p>
-	<p><a href="https://learn.adafruit.com/adafruit-trellis-diy-open-source-led-keypad/python-circuitpython">Adafruit Python and CircuitPython Documentation</a></p>
-	<p><a href="https://www.pygame.org/docs/ref/mixer.html">Pygame Mixer Documentation</a></p>
-	<p><a href="https://github.com/jiaaro/pydub/blob/master/API.markdown">PyDub Documentation</a></p>
-	<p><a href="https://medium.com/better-programming/simple-audio-processing-in-python-with-pydub-c3a217dabf11">Simple Audio Processing in Python with Pydub (Medium.com)</a></p>
-	<p>Lab2 and Lab3 Instructions for Pygame (From 5725 Canvas Site)</p>
+    <p> <a href="https://courses.ece.cornell.edu/ece5990/ECE5725_Fall2019_Projects/Dec_06_Demo/SoundPad/ws442_xc437_Wednesday/index.html">[1] Soundpad (5725 Fall 2019 Project)</a></p>
+	<p><a href="https://learn.adafruit.com/adafruit-trellis-diy-open-source-led-keypad/downloads">[2] Adafruit Trellis Datasheet and Instructions </a></p>
+	<p><a href="https://learn.adafruit.com/adafruit-trellis-diy-open-source-led-keypad/python-circuitpython">[3] Adafruit Python and CircuitPython Documentation</a></p>
+	<p><a href="https://www.pygame.org/docs/ref/mixer.html">[4] Pygame Mixer Documentation</a></p>
+	<p><a href="https://github.com/jiaaro/pydub/blob/master/API.markdown">[5] PyDub Documentation</a></p>
+	<p><a href="https://medium.com/better-programming/simple-audio-processing-in-python-with-pydub-c3a217dabf11">[6] Simple Audio Processing in Python with Pydub (Medium.com)</a></p>
+	<p>[7] Lab2 and Lab3 Instructions for Pygame (From 5725 Canvas Site)</p>
   </section>
 
 <p><!-- References Section -->
   <section class="code" id="code">
-	<h2>Code Appendix</h2>
+	<h2>Appendix</h2>
+	  <h4>Work Distribution</h4>
+	  <figure>
+		<div class="row">
+		<div class="column">
+		<figure><img src="images/jamie.jpg" alt="fig1" style="width:50%">
+			<p><figurecaption>Jamie Poole (Jep349)</figurecaption>
+			</p></figure>
+				<li>Pygame Interface and Design</li>
+				<li>PyDub Research and Audio Overlay</li>
+				<li>Audio Recording Implementation</li>
+				<li>Preparing Instrument Sounds</li>
+		</div>
+		<div class="column">
+		  <figure><img src="images/sijin.jpg" alt="fig1" style="width:50%">
+			<p><figurecaption>Jamie Poole (Jep349)</figurecaption>
+			</p></figure>
+				<li>Hardware Assembling and Testing</li>
+				<li>LED Keypad Implementation </li>
+				<li>Audio Recording and Looping Implementation</li>
+				<li>Integrating Code for the Final Design</li>
+		</div>
+	</div>
+	</figure>	
+	  
+	  
+	  <h4>Code Appendix</h4>
     <p>For the full code repository, see our <a href="https://github.com/Vsj986/5725Final">Github</a> page. </p>
 	 <p>Our main source code blink-withpydub.py is shown below:</p>
   </section>
@@ -368,9 +518,7 @@
  	 </pre>
 	</figure>
 
-	
-  <!-- Copyrights Section -->
-  <div class="copyright">&copy;2019- <strong>Light Theme</strong></div>
+
 </div>
 <!-- Main Container Ends -->
 </body>

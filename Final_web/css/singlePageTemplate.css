@@ -22,12 +22,13 @@ body {
 }
 /* Navigation */
 header {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	height: 6.5%;
-	background-color: #38A2B2;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 6.5%;
+	background-color: /*#38A2B2;*/
 	border-bottom: 1px solid #2C9AB7;
+    background-color: #ED6769;
 }
 .logo {
 	color: #FBF9F9;
@@ -83,7 +84,7 @@ ul li:hover a {
     padding-top: 150px;
     padding-bottom: 150px;
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
-    background-image: url("../images/button_pad.jpg");
+    background-image: url("../images/cover2.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     font-style: normal;
@@ -98,27 +99,49 @@ ul li:hover a {
 .tagline {
     text-align: center;
     color: #FFFFFF;
-    margin-top: 4px;
-    font-weight: bolder;
+    margin-top: 6px;
+    font-weight: lighter;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: medium;
 }
 
+/* Demo Section*/
+.demo {
+    padding-top: 30px;
+    background-color: #FFFFFF;
+    margin-top: 50px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: large;
+}
 
+/* Objective Section */
+.obj {
+	padding-left: 150px;
+	padding-right: 150px;
+	padding-top: 35px;
+	display: inline-block;
+	background-color: #FFFFFF;
+	margin-top: 0px;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: large;
+}
 
 /* Intro Section */
 .intro {
 	padding-left: 150px;
 	padding-right: 150px;
 	padding-top: 35px;
-	/*display: contents;*/
 	display: inline-block;
 	background-color: #FFFFFF;
 	margin-top: 0px;
 	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	font-style: normal;
-	font-weight: lighter;
+	font-weight: normal;
 	font-size: large;
 }
 
@@ -132,8 +155,37 @@ ul li:hover a {
 	margin-top: 0px;
 	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	font-style: normal;
-	font-weight: lighter;
+	font-weight: normal;
 	font-size: large;
+}
+
+figure {
+	float: right;
+	width = 60%;
+	text-align: center;
+	font-style: italic;
+	font-size: normal;
+	text-indent: 0;
+	margin: 0.5em;
+	padding: 0.5em;
+	margin-bottom: 20px;
+}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+	float: left;
+	width: 40%;
+	padding: 2px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+	
+	content: "";
+	clear: both;
+	display: table;
+	margin-left: auto;
+  	margin-right: auto;
 }
 
 /* Rsults Section */
@@ -146,7 +198,7 @@ ul li:hover a {
 	margin-top: 0px;
 	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	font-style: normal;
-	font-weight: lighter;
+	font-weight: normal;
 	font-size: large;
 }
 
@@ -160,7 +212,7 @@ ul li:hover a {
 	margin-top: 0px;
 	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	font-style: normal;
-	font-weight: lighter;
+	font-weight: normal;
 	font-size: large;
 }
 
@@ -174,7 +226,7 @@ ul li:hover a {
 	margin-top: 0px;
 	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	font-style: normal;
-	font-weight: lighter;
+	font-weight: normal;
 	font-size: large;
 }
 
@@ -189,7 +241,7 @@ ul li:hover a {
     margin-top: 0px;
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
     font-style: normal;
-    font-weight: lighter;
+    font-weight: 400;
     font-size: large;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -206,7 +258,7 @@ ul li:hover a {
     margin-top: 0px;
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
     font-style: normal;
-    font-weight: lighter;
+    font-weight: normal;
     font-size: large;
     list-style-position: outside;
 }
@@ -221,7 +273,7 @@ ul li:hover a {
 	margin-top: 0px;
 	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	font-style: normal;
-	font-weight: lighter;
+	font-weight: normal;
 	font-size: large;
 }
 
@@ -230,7 +282,7 @@ ul li:hover a {
 code {
 	background: #f4f4f4;
 	border:1px solid #ddd;
-	border-left: 3.5px solid #38A2B2; /*#f36d33;*/
+	border-left: 3.5px solid #ED6769; /*#f36d33;*/
 	color: #666;
 	page-break-inside: avoid;
 	font-family: monospace, monospace;
@@ -245,8 +297,8 @@ code {
 }
 pre {
   	overflow: auto;
-	padding-left: 120px;
-	padding-right: 100px;
+	padding-left: 0px;
+	padding-right: 200px;
 }
 pre > code {
 	display: block;
